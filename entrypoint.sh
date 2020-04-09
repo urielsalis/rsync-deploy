@@ -2,6 +2,7 @@
 set -eu
 
 SSHPATH="$HOME/.ssh"
+rm -rf "$SSHPATH" 
 mkdir "$SSHPATH"
 echo "$DEPLOY_KEY" > "$SSHPATH/key"
 chmod 600 "$SSHPATH/key"
