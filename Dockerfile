@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-RUN apk add --update rsync openssh-client
+RUN apk add --no-cache rsync openssh-client
 
 # Label
 LABEL "com.github.actions.name"="Deploy with rsync"
