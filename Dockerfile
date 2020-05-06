@@ -12,7 +12,6 @@ LABEL "repository"="http://github.com/urielsalis/rsync-deploy"
 LABEL "homepage"="https://github.com/urielsalis/rsync-deploy"
 LABEL "maintainer"="Urielsalis <uriel@urielsalis.me>"
 
-
 ADD entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
