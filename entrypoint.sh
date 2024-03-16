@@ -13,9 +13,7 @@ az config set extension.use_dynamic_install=yes_without_prompt
 az login --service-principal -u $CLIENT_ID -p $CLIENT_SECRET --tenant $TENANT_ID
 
 echo Opening tunnel
-az network bastion tunnel --port 50022 --resource-port 22 --target-resource-id $RESOURCE_ID --name $BASTION_NAME --resource-group $RESOURCE_GROUP &
-echo Waiting for created
-az network bastion wait --created
+az network bastion tunnel --port 50022 --resource-port 22 --target-resource-id $RESOURCE_ID --name $BASTION_NAME --resource-group $RESOURCE_GROUP --allow-preview true &
 
 echo Wait for bastion tunnel port to open
 {
@@ -24,6 +22,10 @@ echo Wait for bastion tunnel port to open
   done
   sleep 1
 } 2>/dev/null
+
+echo Waiting for created
+az network bastion wait --created --name $BASTION_NAME --allow-preview true
+
 
 echo Synchronizing
 sh -c "rsync $ARGS -e 'ssh -i $SSHPATH/key -o StrictHostKeyChecking=no -p $SERVER_PORT' $GITHUB_WORKSPACE/$FOLDER $SERVER_DEPLOY_STRING"
