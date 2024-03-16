@@ -24,7 +24,7 @@ echo Wait for bastion tunnel port to open
 } 2>/dev/null
 
 echo Waiting for created
-az network bastion wait --created --name $BASTION_NAME
+az network bastion wait --created --name $BASTION_NAME --resource-group $RESOURCE_GROUP 
 
 
 echo Synchronizing
