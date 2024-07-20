@@ -15,23 +15,8 @@ az login --service-principal -u $CLIENT_ID -p $CLIENT_SECRET --tenant $TENANT_ID
 echo Opening tunnel
 az network bastion tunnel --port 50022 --resource-port 22 --target-resource-id $RESOURCE_ID --name $BASTION_NAME --resource-group $RESOURCE_GROUP &
 
-echo Wait for bastion tunnel port to open
-sleep 60
-
-{
-  if [ ! nc -z localhost 50022 ] then
-    echo WARNING: Wait time exceeded and connection with bastion not yet established; trying again
-    sleep 60
-  
-    if [ ! nc -z localhost 50022 ] then
-      echo ERROR: Bastion tunnel not available. Continuing anyway...
-    fi
-  fi
-} 2>/dev/null
-
-echo Waiting for created
+echo Wait for bastion tunnel to open...
 az network bastion wait --created --name $BASTION_NAME --resource-group $RESOURCE_GROUP 
-
 
 echo Synchronizing
 sh -c "rsync $ARGS -e 'ssh -i $SSHPATH/key -o StrictHostKeyChecking=no -p $SERVER_PORT' $GITHUB_WORKSPACE/$FOLDER $SERVER_DEPLOY_STRING"
