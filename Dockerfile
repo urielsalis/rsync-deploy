@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/azure-cli:latest
 
-RUN apt update && apt install -y ssh rsync
+RUN apt-get update && apt-get install -y ssh rsync
 
 # Label
 LABEL "com.github.actions.name"="Deploy with rsync"
