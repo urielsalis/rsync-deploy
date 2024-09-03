@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/azure-cli:latest
 
-RUN apk add --no-cache rsync openssh-client
+RUN apt update && apt install -y ssh rsync
 
 # Label
 LABEL "com.github.actions.name"="Deploy with rsync"
